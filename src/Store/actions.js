@@ -8,3 +8,7 @@ export const delTodo = (todo_id) => ({
   payload: todo_id,
 });
   
+export const finishTodo = (todo_id) => ({
+  type: "SET_TODO_DONE",
+  payload: todo_id,
+});

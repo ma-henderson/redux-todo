@@ -25,6 +25,19 @@ export default function todoReducer(state = defaultState, action) {
         todos: state.todos.filter((todo)=>(
           todo.id != action.payload
       ))}
+    case "SET_TODO_DONE":
+      // How to make code below more concise? map()?
+      let updated_todos = []
+      state.todos.forEach((todo)=>{
+        if (todo.id == action.payload) {
+          todo.done = true
+        }
+        updated_todos.push(todo)
+      })
+      return {
+        ...state,
+        todos: updated_todos
+      }
     default:
       return state;
   }

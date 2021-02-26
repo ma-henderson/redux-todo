@@ -2,11 +2,12 @@ import { Card, Button } from "@material-ui/core";
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import { makeStyles } from '@material-ui/core/styles';
-import { delTodo } from '../Store/actions';
+import { delTodo, finishTodo } from '../Store/actions';
 import { useDispatch } from 'react-redux';
 
 const actionDispatch = (dispatch) => ({
-  delTodoItem: (todo_id) => dispatch(delTodo(todo_id))
+  delTodoItem: (todo_id) => dispatch(delTodo(todo_id)),
+  finishTodoItem: (todo_id) => dispatch(finishTodo(todo_id))
 });
 
 const useStyles = makeStyles({
@@ -30,24 +31,27 @@ const useStyles = makeStyles({
   }
 });
 
-export default function TodoCard({ todoId, content }) {
+export default function TodoCard({ todoId, content, done }) {
   const classes = useStyles();
-  const { delTodoItem } = actionDispatch(useDispatch());
+  const { delTodoItem, finishTodoItem } = actionDispatch(useDispatch());
   const handleDelete = (event) => (delTodoItem(todoId))
+  const handleFinish = (event) => (finishTodoItem(todoId))
 
   return(
     <Card className={classes.root}>
       <CardContent>
         <Typography
-          className={classes.title} 
+          className={done ? classes.titleDone : classes.title} 
           color="textSecondary" 
           gutterBottom
         >
           {content}
         </Typography>
-        <Button variant="contained" color="primary">
-          Done!
-        </Button>
+        {done || 
+          <Button variant="contained" color="primary" onClick={handleFinish}>
+            Done!
+          </Button>
+        }
         <Button 
           variant="contained" 
           color="secondary" 

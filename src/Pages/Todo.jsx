@@ -30,7 +30,7 @@ export default function Todo(props) {
       <Box display="flex" alignItems="center" flexDirection="column">
         <AddEntry />
         {todos?.map((todo)=>(
-          <TodoCard todoId={todo.id} content={todo.name}/>
+          <TodoCard todoId={todo.id} content={todo.name} done={todo.done}/>
         ))}
        </Box>
     </Container>
