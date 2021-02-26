@@ -3,6 +3,14 @@ import TodoCard from '../Components/TodoCard';
 import AddEntry from '../Components/AddEntry';
 import { makeStyles } from '@material-ui/core/styles';
 
+import { makeSelectTodos } from '../Store/selectors';
+import { createSelector } from 'reselect';
+import { useSelector } from 'react-redux';
+
+const stateSelector = createSelector(makeSelectTodos, (todos) => ({
+  todos
+}))
+
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -10,14 +18,8 @@ const useStyles = makeStyles({
   },
 });
 
-
 export default function Todo(props) {
-  const tasks = [
-    {id: 0, name: 'Buy Milk'},
-    {id: 1, name: 'Wash clothes'},
-    {id: 2, name: 'Bake Cookies'},
-    {id: 3, name: 'Pay Bills'}
-  ]
+  const { todos } = useSelector(stateSelector)
   const classes = useStyles();
 
   return(
@@ -27,8 +29,8 @@ export default function Todo(props) {
     </Typography> 
       <Box display="flex" alignItems="center" flexDirection="column">
         <AddEntry />
-        {tasks?.map((task)=>(
-          <TodoCard content={task}/>
+        {todos?.map((todo)=>(
+          <TodoCard todoId={todo.id} content={todo.name}/>
         ))}
        </Box>
     </Container>

@@ -7,3 +7,4 @@ export const delTodo = (todo_id) => ({
   type: "DEL_TODO",
   payload: todo_id,
 });
+  
